@@ -107,10 +107,10 @@ public class Player : MonoBehaviour
 
     private void GetDamage(int damage)
     {
-        if (model.Soldiers - damage <= 0)
+        if (model.Soldiers - damage < 0)
             return;
 
-        for (int i = model.Soldiers; i > model.Soldiers - damage; i--)
+        for (int i = model.Soldiers; i >= model.Soldiers - damage; i--)
         {
             soldiers[i].SetActive(false);
         }
@@ -123,9 +123,30 @@ public class Player : MonoBehaviour
     {
         ITouchable touched = other.GetComponent<ITouchable>();
 
+        if (touched == null)
+            return;
+
         if (other.CompareTag("Hazard"))
         {
             GetDamage(touched.value);
+        }
+        else if (other.CompareTag("Door"))
+        {
+            if (touched.value <= model.Soldiers)
+            {
+                // Break Door
+                touched.OnTouch();
+            }
+            else
+            {
+                // Die
+                model.GetDamage(model.Soldiers);
+            }
+        }
+        else if (other.CompareTag("RecruitSoldier"))
+        {
+            AddSoldiers(touched.value);
+            touched.OnTouch();
         }
     }
 }
