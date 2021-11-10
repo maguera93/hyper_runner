@@ -705,7 +705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerConfig:
     Soldiers: 5
-    Speed: 5
+    Speed: 2
   playerPrefab: {fileID: 8700098840241813213, guid: 5b0c3c3504b29e94395c51f53575fb29,
     type: 3}
   playerSpawn: {fileID: 182639670}
